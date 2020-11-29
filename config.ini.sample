@@ -1,0 +1,5 @@
+[config]
+host    = https://your.host/jira
+user    = your.user
+pass    = /path/to/file
+project = YOURPROJECT

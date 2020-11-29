@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+"""
+Jira List
+"""
+
+import configparser
+import os
+from jira import JIRA
+
+config = configparser.ConfigParser()
+config.read(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini'))
+settings = config['config']
+with open(settings['pass'], "r") as fp:
+    password = fp.read().rstrip()
+jira = JIRA(settings['host'], basic_auth=(settings['user'], password))
+for issue in jira.search_issues(
+        "project=%s and assignee = currentUser() AND sprint IN openSprints()" % settings['project']
+        ):
+    print(issue, issue.fields.summary)

@@ -1,0 +1,24 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+"""
+Jira Comment from STDIN
+"""
+
+import configparser
+import sys
+import os
+from jira import JIRA
+
+if len(sys.argv) != 2:
+    print("<jrment> JIRA-123")
+    sys.exit(1)
+
+config = configparser.ConfigParser()
+config.read(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini'))
+settings = config['config']
+comment = sys.stdin.read()
+print(comment)
+with open(settings['pass'], "r") as fp:
+    password = fp.read().rstrip()
+jira = JIRA(settings['host'], basic_auth=(settings['user'], password))
+jira.add_comment(sys.argv[1], comment)
