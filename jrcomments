@@ -14,7 +14,11 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 config = configparser.ConfigParser()
-config.read(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini'))
+config.read(
+    os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        'config.ini'
+    ))
 settings = config['config']
 with open(settings['pass'], "r") as fp:
     password = fp.read().rstrip()
